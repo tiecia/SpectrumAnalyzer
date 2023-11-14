@@ -1,5 +1,6 @@
-﻿using System.Numerics;
+﻿using FftSharp;
 using NAudio.Wave;
+using Complex = System.Numerics.Complex;
 
 namespace AudioLoopbackTest;
 
