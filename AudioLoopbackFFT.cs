@@ -5,8 +5,7 @@ using NAudio.Wave;
 namespace AudioLoopbackTest;
 
 public partial class AudioLoopbackFFT{
-                                         public event EventHandler<NewFftEventArgs> FFTCalculated
-;
+    public event EventHandler<NewFftEventArgs> FFTCalculated;
     public int FFTBins { get; set; } = 512;
     
     public class NewFftEventArgs : EventArgs
@@ -17,5 +16,4 @@ public partial class AudioLoopbackFFT{
             Spectrum = spectrum;
         }
     }
-
 }

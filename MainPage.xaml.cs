@@ -193,6 +193,13 @@ public class SpectrumView : IDrawable
         {
             if(Heights[i] == 0) return;
             // canvas.DrawRectangle(i*BinWidth, 0, BinWidth, 100);
+            if(Application.Current.RequestedTheme == AppTheme.Dark)
+            {
+                canvas.StrokeColor = Color.FromArgb("#FFF");
+            } else
+            {
+                canvas.StrokeColor = Color.FromArgb("#000");
+            }
             canvas.DrawRectangle(i*BinWidth, dirtyRect.Height, BinWidth, (float)Heights[i]*-1);
         }
         // Thread.Sleep(20);
