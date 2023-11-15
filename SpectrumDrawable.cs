@@ -5,19 +5,36 @@ namespace AudioLoopbackTest;
 
 public class SpectrumDrawable : IDrawable
 {
+    private float _contentWidth = 0;
+    public float ContentWidth
+    {
+        get => _contentWidth;
+        private set
+        {
+            if (value != _contentWidth)
+            {
+                float oldWidth = _contentWidth;
+                _contentWidth = value;
+                ContentWidthChanged?.Invoke(this, new ContentWidthChangedEventArgs(oldWidth, value));
+            }
+            else
+            {
+                _contentWidth = value;
+            }
+        }
+    }
+
+    public event EventHandler<ContentWidthChangedEventArgs> ContentWidthChanged;
+    
     public Complex[] Data { get; set; }
     
-    private int _bins;
-    private float _binWidth;
     private double[] _heights;
+    private float binWidth = 5;
 
     private AppTheme _theme = AppTheme.Light;
     
-    public SpectrumDrawable(int bins)
+    public SpectrumDrawable()
     {
-        _bins = bins;
-        _heights = new double[bins];
-
         if (Application.Current != null)
         {
             Application.Current.RequestedThemeChanged += (s, a) =>
@@ -28,9 +45,16 @@ public class SpectrumDrawable : IDrawable
     }
     public void Draw(ICanvas canvas, RectF dirtyRect)
     {
-        CalculateBinWidth(dirtyRect.Width);
-        
         var magnitude = FFT.Magnitude(Data);
+
+        // var binWidth = CalculateBinWidth(dirtyRect.Width, magnitude.Length);
+        ContentWidth = CalculateContentWidth(binWidth, magnitude.Length);
+
+        if (_heights == null || _heights.Length != magnitude.Length)
+        {
+            _heights = new double[magnitude.Length];
+        }
+        
         for (int i = 0; i < _heights.Length; i++)
         {
             _heights[i] = GetYPos(magnitude[i], dirtyRect.Height);
@@ -39,8 +63,8 @@ public class SpectrumDrawable : IDrawable
         for (int i = 0; i < _heights.Length; i++)
         {
             canvas.StrokeColor = Color.FromArgb(_theme == AppTheme.Dark ? "#FFF" : "#000");
-            canvas.DrawRectangle(i*_binWidth, dirtyRect.Height, _binWidth, 200);
-            // canvas.DrawRectangle(i*_binWidth, dirtyRect.Height, _binWidth, (float)_heights[i]*-1);
+            // canvas.DrawRectangle(i*binWidth, dirtyRect.Height, binWidth, -200);
+            canvas.DrawRectangle(i*binWidth, dirtyRect.Height, binWidth, (float)_heights[i]*-1);
         }
     }
     
@@ -62,8 +86,42 @@ public class SpectrumDrawable : IDrawable
         return magnitide * height * 80;
     }
 
-    private void CalculateBinWidth(double width)
+    private float CalculateBinWidth(double width, int bins)
     {
-        _binWidth = (int)Math.Floor(width / _bins);
+        return 5;
+        // _binWidth = (int)Math.Floor(width / bins);
+    }
+
+    private float CalculateContentWidth(float binWidth, int bins)
+    {
+        return 16384;
+        // return binWidth * bins;
+    }
+
+    public void ZoomOut()
+    {
+        if (binWidth > 0)
+        {
+            binWidth--;
+        }
+    }
+
+    public void ZoomIn()
+    {
+        if (binWidth < 100)
+        {
+            binWidth++;
+        }
+    }
+}
+
+public class ContentWidthChangedEventArgs : EventArgs
+{
+    public float OldWidth { get; }
+    public float NewWidth { get; }
+    public ContentWidthChangedEventArgs(float oldWidth, float newWidth)
+    {
+        OldWidth = oldWidth;
+        NewWidth = newWidth;
     }
 }

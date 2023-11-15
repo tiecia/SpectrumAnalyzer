@@ -1,10 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:main="clr-namespace:AudioLoopbackTest"
+             x:DataType="main:MainPage"
              x:Class="AudioLoopbackTest.MainPage">
     
-    <ScrollView>
-        <GraphicsView x:Name="GraphicsView"/>
+    <ContentPage.MenuBarItems>
+        <MenuBarItem Text="Zoom">
+            <MenuFlyoutItem x:Name="ZoomInButton" Text="+" Clicked="ZoomInClicked"/>
+            
+            <MenuFlyoutItem Text="-" Clicked="ZoomOutClicked">
+                
+            </MenuFlyoutItem>
+        </MenuBarItem>
+    </ContentPage.MenuBarItems>
+    
+    <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Always">
+        <GraphicsView Background="Aqua" x:Name="GraphicsView"/>
     </ScrollView>
     
 </ContentPage>
