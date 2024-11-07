@@ -1,9 +1,11 @@
-﻿namespace AudioLoopbackTest;
+﻿using Android.Media.Projection;
+
+namespace AudioLoopbackTest;
 
 public partial class AudioLoopbackFFT
 {
-    // public AudioLoopbackFFT()
-    // {
-    //     throw new NotImplementedException();
-    // }
+    public AudioLoopbackFFT()
+    {
+        
+    }
 }
