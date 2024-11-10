@@ -23,6 +23,10 @@
             <CheckBox IsChecked="{Binding Normalize}"/>
             <Label Text="Normalize"/>
         </HorizontalStackLayout>
+        <HorizontalStackLayout>
+            <CheckBox IsChecked="{Binding NegativeFrequencies}"/>
+            <Label Text="Show Negative Frequencies"/>
+        </HorizontalStackLayout>
         <Button Text="Close" Clicked="OnCloseButtonClicked"/>
     </VerticalStackLayout>
 
