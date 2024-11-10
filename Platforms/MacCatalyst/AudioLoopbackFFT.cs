@@ -2,8 +2,8 @@
 
 public partial class AudioLoopbackFFT
 {
-    // public AudioLoopbackFFT()
-    // {
-    //     throw new NotImplementedException();
-    // }
+    public AudioLoopbackFFT(IServiceProvider serviceProvider)
+    {
+        throw new NotImplementedException();
+    }
 }

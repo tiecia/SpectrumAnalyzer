@@ -8,10 +8,10 @@
     <ContentPage.MenuBarItems>
         <MenuBarItem Text="Zoom">
             <MenuFlyoutItem x:Name="ZoomInButton" Text="+" Clicked="ZoomInClicked"/>
-            
-            <MenuFlyoutItem Text="-" Clicked="ZoomOutClicked">
-                
-            </MenuFlyoutItem>
+            <MenuFlyoutItem Text="-" Clicked="ZoomOutClicked"/>
+        </MenuBarItem>
+        <MenuBarItem Text="Settings">
+            <MenuFlyoutItem Text="Open" Clicked="OpenSettingsAsync"/>
         </MenuBarItem>
     </ContentPage.MenuBarItems>
     
