@@ -47,4 +47,9 @@ public partial class MainPage : ContentPage
         var settings = _serviceProvider.GetService<SettingsPopup>();
         await this.ShowPopupAsync(settings);
     }
+
+    private void MenuItem_OnClicked(object sender, EventArgs e)
+    {
+        throw new NotImplementedException();
+    }
 }

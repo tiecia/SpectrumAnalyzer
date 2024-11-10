@@ -13,8 +13,10 @@ public partial class SettingsPopup : Popup
 
     public SettingsPopup(Settings settings)
     {
-        _settings = settings;
         InitializeComponent();
+        
+        _settings = settings;
+        BinFftCheckbox.IsChecked = settings.BinFFT;
     }
     
     private void OnCloseButtonClicked(object sender, EventArgs e)
@@ -25,53 +27,35 @@ public partial class SettingsPopup : Popup
     private void IncreaseBins(object sender, EventArgs e)
     {
         var currentBins = _settings.FFTBins;
-        var nextPowerOfTwo = GetNextPowerOfTwo(currentBins);
+        var nextPowerOfTwo = NextPowerOfTwo(currentBins);
         _settings.FFTBins = nextPowerOfTwo;
     }
 
     private void DecreaseBins(object sender, EventArgs e)
     {
         var currentBins = _settings.FFTBins;
-        var priorPowerOfTwo = GetPriorPowerOfTwo(currentBins);
+        var priorPowerOfTwo = PrevPowerOfTwo(currentBins);
+        if (priorPowerOfTwo < 2)
+        {
+            priorPowerOfTwo = 2;
+        }
         _settings.FFTBins = priorPowerOfTwo;
     }
     
-    public static int GetPriorPowerOfTwo(int number)
+    public static int NextPowerOfTwo(int num)
     {
-        if (number < 1)
-        {
-            throw new ArgumentException("Number must be greater than 0.");
-        }
-
-        // Decrement number by 1 to handle exact powers of two correctly
-        number |= (number >> 1);
-        number |= (number >> 2);
-        number |= (number >> 4);
-        number |= (number >> 8);
-        number |= (number >> 16);
-
-        // Add 1 to the result and shift right by 1 to get the prior power of two
-        return (number + 1) >> 1;
-    }
+        var currentPower = Math.Log2(num);
+        var nextPower = currentPower + 1;
+        return (int)Math.Pow(2, nextPower);
+    } 
     
-    public static int GetNextPowerOfTwo(int number)
+    public static int PrevPowerOfTwo(int num)
     {
-        if (number < 1)
-        {
-            throw new ArgumentException("Number must be greater than 0.");
-        }
-
-        number--;
-
-        number |= (number >> 1);
-        number |= (number >> 2);
-        number |= (number >> 4);
-        number |= (number >> 8);
-        number |= (number >> 16);
-
-        return number + 1;
-    }
-
+        var currentPower = Math.Log2(num);
+        var nextPower = currentPower - 1;
+        return (int)Math.Pow(2, nextPower);
+    } 
+    
     private void OnBinFFTChanged(object sender, CheckedChangedEventArgs e)
     {
         _settings.BinFFT = e.Value;

@@ -16,8 +16,11 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             }).UseMauiCommunityToolkit();
 
-        // builder.Services.AddTransient<SettingsPopup>();
-        // builder.Services.AddSingleton<Settings>();
+        builder.Services.AddTransient<SettingsPopup>();
+        builder.Services.AddSingleton<Settings>();
+        
+        // Allows IServiceProvider to be injected into it
+        builder.Services.AddSingleton<MainPage>();
 
 #if DEBUG
         builder.Logging.AddDebug();

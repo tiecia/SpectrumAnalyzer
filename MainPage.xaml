@@ -7,7 +7,7 @@
     
     <ContentPage.MenuBarItems>
         <MenuBarItem Text="Zoom">
-            <MenuFlyoutItem x:Name="ZoomInButton" Text="+" Clicked="ZoomInClicked"/>
+            <MenuFlyoutItem Text="+" Clicked="ZoomInClicked"/>
             <MenuFlyoutItem Text="-" Clicked="ZoomOutClicked"/>
         </MenuBarItem>
         <MenuBarItem Text="Settings">
