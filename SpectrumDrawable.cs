@@ -5,6 +5,7 @@ namespace AudioLoopbackTest;
 
 public class SpectrumDrawable : IDrawable
 {
+    private readonly IServiceProvider _serviceProvider;
     private float _contentWidth = 0;
     public float ContentWidth
     {
@@ -29,12 +30,13 @@ public class SpectrumDrawable : IDrawable
     public Complex[] Data { get; set; }
     
     private double[] _heights;
-    private float binWidth = 5;
+    private double _windowWidth;
 
     private AppTheme _theme = AppTheme.Light;
     
-    public SpectrumDrawable()
+    public SpectrumDrawable(IServiceProvider serviceProvider)
     {
+        _serviceProvider = serviceProvider;
         if (Application.Current != null)
         {
             Application.Current.RequestedThemeChanged += (s, a) =>
@@ -44,12 +46,23 @@ public class SpectrumDrawable : IDrawable
         }
     }
     public void Draw(ICanvas canvas, RectF dirtyRect)
-    {
+    { 
         var magnitude = FFT.Magnitude(Data);
+        
+        var settings = _serviceProvider.GetService<Settings>();
 
-        // var binWidth = CalculateBinWidth(dirtyRect.Width, magnitude.Length);
-        ContentWidth = CalculateContentWidth(binWidth, magnitude.Length);
-
+        if (settings.Normalize)
+        {
+            magnitude = Normalize(magnitude);
+        }
+        
+        var binWidth = _windowWidth / magnitude.Length;
+         
+        if (binWidth < 1)
+        {
+            binWidth = 1;
+        }
+         
         if (_heights == null || _heights.Length != magnitude.Length)
         {
             _heights = new double[magnitude.Length];
@@ -57,15 +70,27 @@ public class SpectrumDrawable : IDrawable
         
         for (int i = 0; i < _heights.Length; i++)
         {
-            _heights[i] = GetYPos(magnitude[i], dirtyRect.Height);
+            if (settings.Normalize)
+            {
+                _heights[i] = GetYPosNormalized(magnitude[i], dirtyRect.Height);
+            }
+            else
+            {
+                _heights[i] = GetYPos(magnitude[i], dirtyRect.Height);
+            }
         }
 
         for (int i = 0; i < _heights.Length; i++)
         {
             canvas.StrokeColor = Color.FromArgb(_theme == AppTheme.Dark ? "#FFF" : "#000");
             // canvas.DrawRectangle(i*binWidth, dirtyRect.Height, binWidth, -200);
-            canvas.DrawRectangle(i*binWidth, dirtyRect.Height, binWidth, (float)_heights[i]*-1);
+            canvas.DrawRectangle((float)(i*binWidth), dirtyRect.Height, (float)binWidth, (float)_heights[i]*-1);
         }
+    }
+    
+    public void WindowWidthChanged(double width)
+    {
+        _windowWidth = width;
     }
     
     private double GetYPosLog(double intensityDB, float height)
@@ -81,38 +106,33 @@ public class SpectrumDrawable : IDrawable
         return yPos;
     }
 
-    private double GetYPos(double magnitide, float height)
+    private double GetYPos(double magnitude, float height)
     {
-        return magnitide * height * 80;
+        return magnitude * height * 80;
     }
 
-    private float CalculateBinWidth(double width, int bins)
+    private double GetYPosNormalized(double magnitude, float height)
     {
-        return 5;
-        // _binWidth = (int)Math.Floor(width / bins);
+        return magnitude * height;
     }
 
-    private float CalculateContentWidth(float binWidth, int bins)
+    public static double[] Normalize(double[] values)
     {
-        return 16384;
-        // return binWidth * bins;
-    }
+        double min = values.Min();
+        double max = values.Max();
+        double range = max - min;
 
-    public void ZoomOut()
-    {
-        if (binWidth > 0)
+        if (range == 0)
         {
-            binWidth--;
+            return values.Select(v => 0.0).ToArray(); // Avoid division by zero
         }
+
+        // Perform Min-Max Normalization
+        double[] normalizedValues = values.Select(v => (v - min) / range).ToArray();
+
+        return normalizedValues;
     }
 
-    public void ZoomIn()
-    {
-        if (binWidth < 100)
-        {
-            binWidth++;
-        }
-    }
 }
 
 public class ContentWidthChangedEventArgs : EventArgs

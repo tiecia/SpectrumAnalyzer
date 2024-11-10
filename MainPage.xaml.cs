@@ -15,15 +15,19 @@ public partial class MainPage : ContentPage
         InitializeComponent();
         BindingContext = this;
         
-        _audioLoopbackFft = new AudioLoopbackFFT(_serviceProvider);
+        _audioLoopbackFft = new AudioLoopbackFFT(serviceProvider);
 
-        var spectrum = new SpectrumDrawable();
-        spectrum.ContentWidthChanged += (sender, args) =>
-        {
-            GraphicsView.WidthRequest = args.NewWidth;
-        };
-        
+        var spectrum = new SpectrumDrawable(serviceProvider);
+        // spectrum.ContentWidthChanged += (sender, args) =>
+        // {
+        //     GraphicsView.WidthRequest = args.NewWidth;
+        // };
+
         GraphicsView.Drawable = spectrum;
+        GraphicsView.SizeChanged += (sender, args) =>
+        {
+            spectrum.WindowWidthChanged(GraphicsView.Width);
+        };
 
         _audioLoopbackFft.FFTCalculated += (sender, args) =>
         {
@@ -32,24 +36,9 @@ public partial class MainPage : ContentPage
         };
     }
 
-    private void ZoomInClicked(object sender, EventArgs e)
-    {
-        ((SpectrumDrawable)GraphicsView.Drawable).ZoomIn();
-    }
-
-    private void ZoomOutClicked(object sender, EventArgs e)
-    {
-        ((SpectrumDrawable)GraphicsView.Drawable).ZoomOut();
-    }
-    
     private async void OpenSettingsAsync(object sender, EventArgs e)
     {
         var settings = _serviceProvider.GetService<SettingsPopup>();
         await this.ShowPopupAsync(settings);
-    }
-
-    private void MenuItem_OnClicked(object sender, EventArgs e)
-    {
-        throw new NotImplementedException();
     }
 }

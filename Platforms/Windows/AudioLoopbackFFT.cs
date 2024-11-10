@@ -27,12 +27,12 @@ public partial class AudioLoopbackFFT
                 audioBuffer[i/8] = BitConverter.ToSingle(dataBuffer, i);
             }
             
-            var binFft = settings.BinFFT;
+            var binFft = settings.BinFft;
             
             double[] fftBuffer;
             if (binFft)
             {
-                var fftBins = settings.FFTBins;
+                var fftBins = settings.FftBins;
                 
                 var combineSize = audioBuffer.Length / fftBins;
                 fftBuffer = new double[fftBins];

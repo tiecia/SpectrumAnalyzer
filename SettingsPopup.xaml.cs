@@ -16,7 +16,17 @@ public partial class SettingsPopup : Popup
         InitializeComponent();
         
         _settings = settings;
-        BinFftCheckbox.IsChecked = settings.BinFFT;
+        BindingContext = settings;
+        UpdateBins();
+    }
+
+    private void UpdateBins()
+    {
+        BinLabel.Text = $"Bins: {_settings.FftBins}";
+        
+        BinLabel.IsVisible = _settings.BinFft;
+        IncreaseButton.IsEnabled = _settings.BinFft;
+        DecreaseButton.IsEnabled = _settings.BinFft;
     }
     
     private void OnCloseButtonClicked(object sender, EventArgs e)
@@ -26,20 +36,24 @@ public partial class SettingsPopup : Popup
 
     private void IncreaseBins(object sender, EventArgs e)
     {
-        var currentBins = _settings.FFTBins;
+        var currentBins = _settings.FftBins;
         var nextPowerOfTwo = NextPowerOfTwo(currentBins);
-        _settings.FFTBins = nextPowerOfTwo;
+        _settings.FftBins = nextPowerOfTwo;
+
+        UpdateBins();
     }
 
     private void DecreaseBins(object sender, EventArgs e)
     {
-        var currentBins = _settings.FFTBins;
+        var currentBins = _settings.FftBins;
         var priorPowerOfTwo = PrevPowerOfTwo(currentBins);
         if (priorPowerOfTwo < 2)
         {
             priorPowerOfTwo = 2;
         }
-        _settings.FFTBins = priorPowerOfTwo;
+        _settings.FftBins = priorPowerOfTwo;
+        
+        UpdateBins();
     }
     
     public static int NextPowerOfTwo(int num)
@@ -58,6 +72,6 @@ public partial class SettingsPopup : Popup
     
     private void OnBinFFTChanged(object sender, CheckedChangedEventArgs e)
     {
-        _settings.BinFFT = e.Value;
+        UpdateBins();
     }
 }

@@ -6,17 +6,11 @@
              x:Class="AudioLoopbackTest.MainPage">
     
     <ContentPage.MenuBarItems>
-        <MenuBarItem Text="Zoom">
-            <MenuFlyoutItem Text="+" Clicked="ZoomInClicked"/>
-            <MenuFlyoutItem Text="-" Clicked="ZoomOutClicked"/>
-        </MenuBarItem>
         <MenuBarItem Text="Settings">
             <MenuFlyoutItem Text="Open" Clicked="OpenSettingsAsync"/>
         </MenuBarItem>
     </ContentPage.MenuBarItems>
     
-    <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Always">
-        <GraphicsView Background="Aqua" x:Name="GraphicsView"/>
-    </ScrollView>
+    <GraphicsView Background="Aqua" x:Name="GraphicsView"/>
     
 </ContentPage>

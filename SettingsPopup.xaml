@@ -5,16 +5,24 @@
                xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
                xmlns:audioLoopbackTest="clr-namespace:AudioLoopbackTest"
                x:Class="AudioLoopbackTest.SettingsPopup"
-               x:DataType="audioLoopbackTest:SettingsPopup"
+               x:DataType="audioLoopbackTest:Settings"
                Size="300,200">
     
     <VerticalStackLayout>
         <HorizontalStackLayout>
-            <Button Text="+ Bins" Clicked="IncreaseBins"/>
-            <Button Text="- Bins" Clicked="DecreaseBins"/>
+            <Button x:Name="DecreaseButton" Text="- Bins" Clicked="DecreaseBins"/>
+            <Button x:Name="IncreaseButton" Text="+ Bins" Clicked="IncreaseBins"/>
+            <Label x:Name="BinLabel"/>
         </HorizontalStackLayout>
         
-        <CheckBox x:Name="BinFftCheckbox" CheckedChanged="OnBinFFTChanged"/>
+        <HorizontalStackLayout>
+            <CheckBox IsChecked="{Binding BinFft}" CheckedChanged="OnBinFFTChanged"/>
+            <Label Text="Bin FFT"/>
+        </HorizontalStackLayout>
+        <HorizontalStackLayout>
+            <CheckBox IsChecked="{Binding Normalize}"/>
+            <Label Text="Normalize"/>
+        </HorizontalStackLayout>
         <Button Text="Close" Clicked="OnCloseButtonClicked"/>
     </VerticalStackLayout>
 
