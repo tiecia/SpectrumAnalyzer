@@ -1,5 +1,6 @@
 ﻿using FftSharp;
 using Complex = System.Numerics.Complex;
+using Font = Microsoft.Maui.Graphics.Font;
 
 namespace AudioLoopbackTest;
 
@@ -86,6 +87,11 @@ public class SpectrumDrawable : IDrawable
             // canvas.DrawRectangle(i*binWidth, dirtyRect.Height, binWidth, -200);
             canvas.DrawRectangle((float)(i*binWidth), dirtyRect.Height, (float)binWidth, (float)_heights[i]*-1);
         }
+        
+        canvas.Font = Font.DefaultBold;
+        canvas.FontSize = 30;
+        canvas.DrawString("Frequency (Hz)", dirtyRect.Width - 250, dirtyRect.Height-70, 250, 100, HorizontalAlignment.Left, VerticalAlignment.Top);
+        canvas.DrawString("Relative Power (RMS)", 15, 15, 350, 100, HorizontalAlignment.Left, VerticalAlignment.Top);
     }
     
     public void WindowWidthChanged(double width)

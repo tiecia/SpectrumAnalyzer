@@ -6,7 +6,7 @@
                xmlns:audioLoopbackTest="clr-namespace:AudioLoopbackTest"
                x:Class="AudioLoopbackTest.SettingsPopup"
                x:DataType="audioLoopbackTest:Settings"
-               Size="300,200">
+               Size="300,300">
     
     <VerticalStackLayout>
         <HorizontalStackLayout>
