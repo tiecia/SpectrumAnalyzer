@@ -48,6 +48,11 @@ public class SpectrumDrawable : IDrawable
     }
     public void Draw(ICanvas canvas, RectF dirtyRect)
     { 
+        if (Data == null)
+        {
+            return;
+        }
+        
         var settings = _serviceProvider.GetService<Settings>();
         
         var magnitude = FFT.Magnitude(Data, positiveOnly:!settings.NegativeFrequencies);

@@ -5,10 +5,19 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:AudioLoopbackTest"
     Shell.FlyoutBehavior="Disabled">
-
-    <ShellContent
-        Title="Instantaneous FFT Spectrum"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
-
+    
+    <TabBar>
+        <Tab Title="Instantaneous FFT Spectrum">
+            <ShellContent
+                Title="Instantaneous FFT Spectrum"
+                ContentTemplate="{DataTemplate local:MainPage}"
+                Route="MainPage"/>
+        </Tab>
+        <Tab Title="FFT Waterfall">
+            <ShellContent
+                Title="FFT Waterfall"
+                ContentTemplate="{DataTemplate local:WaterfallView}"
+                Route="MainPage"/>
+        </Tab>
+    </TabBar>
 </Shell>

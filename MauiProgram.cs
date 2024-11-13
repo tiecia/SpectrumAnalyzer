@@ -21,6 +21,7 @@ public static class MauiProgram
         
         // Allows IServiceProvider to be injected into it
         builder.Services.AddSingleton<MainPage>();
+        builder.Services.AddSingleton<WaterfallView>();
 
 #if DEBUG
         builder.Logging.AddDebug();

@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:main="clr-namespace:AudioLoopbackTest"
+             x:DataType="main:MainPage"
+             x:Class="AudioLoopbackTest.WaterfallView">
+    
+    <!-- <ContentPage.MenuBarItems> -->
+    <!--     <MenuBarItem Text="Settings"> -->
+    <!--         <MenuFlyoutItem Text="Open" Clicked="OpenSettingsAsync"/> -->
+    <!--     </MenuBarItem> -->
+    <!-- </ContentPage.MenuBarItems> -->
+    
+    <GraphicsView Background="Aqua" x:Name="GraphicsView"/>
+    
+</ContentPage>

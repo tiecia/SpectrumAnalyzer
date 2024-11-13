@@ -63,6 +63,7 @@
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
         <PackageReference Include="NAudio" Version="2.2.1" />
         <PackageReference Include="NAudio.Extras" Version="2.2.1" />
+        <PackageReference Include="SkiaSharp" Version="2.88.9" />
     </ItemGroup>
 
     <ItemGroup>
@@ -75,6 +76,16 @@
       <Compile Update="Platforms\Android\AudioLoopbackFFT.cs">
         <ExcludeFromCurrentConfiguration>true</ExcludeFromCurrentConfiguration>
       </Compile>
+      <Compile Update="WaterfallView.xaml.cs">
+        <DependentUpon>WaterfallView.xaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <MauiXaml Update="WaterfallView.xaml">
+        <SubType>Designer</SubType>
+      </MauiXaml>
     </ItemGroup>
 
 </Project>
