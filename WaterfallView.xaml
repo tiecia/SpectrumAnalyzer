@@ -11,6 +11,6 @@
     <!--     </MenuBarItem> -->
     <!-- </ContentPage.MenuBarItems> -->
     
-    <GraphicsView Background="Aqua" x:Name="GraphicsView"/>
+    <!-- <GraphicsView Background="Aqua" x:Name="GraphicsView"/> -->
     
 </ContentPage>

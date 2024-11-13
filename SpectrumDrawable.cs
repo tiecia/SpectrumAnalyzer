@@ -59,7 +59,7 @@ public class SpectrumDrawable : IDrawable
 
         if (settings.Normalize)
         {
-            magnitude = Normalize(magnitude);
+            magnitude = Utils.Normalize(magnitude);
         }
         
         var binWidth = _windowWidth / magnitude.Length;
@@ -126,24 +126,6 @@ public class SpectrumDrawable : IDrawable
     {
         return magnitude * height;
     }
-
-    public static double[] Normalize(double[] values)
-    {
-        double min = values.Min();
-        double max = values.Max();
-        double range = max - min;
-
-        if (range == 0)
-        {
-            return values.Select(v => 0.0).ToArray(); // Avoid division by zero
-        }
-
-        // Perform Min-Max Normalization
-        double[] normalizedValues = values.Select(v => (v - min) / range).ToArray();
-
-        return normalizedValues;
-    }
-
 }
 
 public class ContentWidthChangedEventArgs : EventArgs

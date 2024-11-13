@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
+using SkiaSharp.Views.Maui.Controls.Hosting;
 
 namespace AudioLoopbackTest;
 
@@ -14,7 +15,7 @@ public static class MauiProgram
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-            }).UseMauiCommunityToolkit();
+            }).UseMauiCommunityToolkit().UseSkiaSharp();
 
         builder.Services.AddTransient<SettingsPopup>();
         builder.Services.AddSingleton<Settings>();
