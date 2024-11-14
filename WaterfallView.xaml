@@ -5,12 +5,10 @@
              x:DataType="main:MainPage"
              x:Class="AudioLoopbackTest.WaterfallView">
     
-    <!-- <ContentPage.MenuBarItems> -->
-    <!--     <MenuBarItem Text="Settings"> -->
-    <!--         <MenuFlyoutItem Text="Open" Clicked="OpenSettingsAsync"/> -->
-    <!--     </MenuBarItem> -->
-    <!-- </ContentPage.MenuBarItems> -->
-    
-    <!-- <GraphicsView Background="Aqua" x:Name="GraphicsView"/> -->
+    <ContentPage.MenuBarItems>
+        <MenuBarItem Text="Settings">
+            <MenuFlyoutItem Text="Open" Clicked="OpenSettingsAsync"/>
+        </MenuBarItem>
+    </ContentPage.MenuBarItems>
     
 </ContentPage>

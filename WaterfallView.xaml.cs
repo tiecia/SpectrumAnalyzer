@@ -29,40 +29,11 @@ public partial class WaterfallView : ContentPage
         
         _audioLoopbackFft = new AudioLoopbackFFT(serviceProvider);
 
-        var spectrum = new WaterfallDrawable(serviceProvider);
-        // spectrum.ContentWidthChanged += (sender, args) =>
-        // {
-        //     GraphicsView.WidthRequest = args.NewWidth;
-        // };
-
-        // GraphicsView.Drawable = spectrum;
-        // GraphicsView.SizeChanged += (sender, args) =>
-        // {
-        //     spectrum.WindowWidthChanged(GraphicsView.Width);
-        // };
-
         _audioLoopbackFft.FFTCalculated += (sender, args) =>
         {
-            // ((WaterfallDrawable)GraphicsView.Drawable).Data = args.Spectrum;
-            // GraphicsView.Invalidate();
             _data = args.Spectrum;
             _canvasView.InvalidateSurface();
         };
-        
-        // using (SKPaint textPaint = new SKPaint { TextSize = 48 })
-        // {
-        //     SKRect bounds = new SKRect();
-        //     textPaint.MeasureText(TEXT, ref bounds);
-        //
-        //     _bitmap = new SKBitmap((int)bounds.Right,
-        //         (int)bounds.Height);
-        //
-        //     using (SKCanvas bitmapCanvas = new SKCanvas(_bitmap))
-        //     {
-        //         bitmapCanvas.Clear();
-        //         bitmapCanvas.DrawText(TEXT, 0, -bounds.Top, textPaint);
-        //     }
-        // }
         
         _canvasView = new SKCanvasView();
         _canvasView.PaintSurface += CanvasViewOnPaintSurface;
@@ -134,6 +105,15 @@ public partial class WaterfallView : ContentPage
             width += bm.Width;
         }
         
+        // var textPaint = new SKPaint()
+        // {
+        //     Color = SKColors.White,
+        //     IsAntialias = true,
+        //     TextSize = 36,
+        //     FakeBoldText = true,
+        // };
+        //
+        // canvas.DrawText("Frequency (Hz)", 0,30, textPaint);
         canvas.Flush();
 
         var maxBitmaps = info.Width / bitmap.Width;

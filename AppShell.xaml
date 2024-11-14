@@ -4,18 +4,17 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:AudioLoopbackTest"
-    Shell.FlyoutBehavior="Disabled">
+    FlyoutBehavior="Disabled"
+    Title="FFT Visualizations">
     
     <TabBar>
-        <Tab Title="Instantaneous FFT Spectrum">
+        <Tab Title="Instantaneous Spectrum">
             <ShellContent
-                Title="Instantaneous FFT Spectrum"
                 ContentTemplate="{DataTemplate local:MainPage}"
                 Route="MainPage"/>
         </Tab>
-        <Tab Title="FFT Waterfall">
+        <Tab Title="Waterfall Spectrogram">
             <ShellContent
-                Title="FFT Waterfall"
                 ContentTemplate="{DataTemplate local:WaterfallView}"
                 Route="MainPage"/>
         </Tab>
